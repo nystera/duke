@@ -33,10 +33,14 @@ public class Duke {
                 switch(inputType.toLowerCase()){
                     case "deadline":
                         list.addDeadline(input);
-                }/*
-                Task currTask = new Task(input);
-                list.addTask(currTask);
-                list.printAddedTask(input);*/
+                        break;
+                    case "todo":
+                        list.addToDo(input);
+                        break;
+                    case "event":
+                        list.addEvent(input);
+                        break;
+                }
             }
         }
         System.out.println(line + "Bye. Hope to see you again soon!\n" + line);
