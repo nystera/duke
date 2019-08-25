@@ -58,16 +58,21 @@ public class TaskList{
         System.out.println(Duke.line);
     }
 
-    void addDeadline(String input){
-        int strLen = input.length();
-        String description = input.substring(9, input.indexOf("/by") - 1);
-        String by = input.substring(input.indexOf("/by") + 4);
-        Deadline newDeadline = new Deadline(description, by);
-        list.add(newDeadline);
-        System.out.println(Duke.line + "Got it. I've added this task:" );
-        System.out.println("  " + newDeadline.toString());
-        System.out.println(showCurrTasks());
-        System.out.println(Duke.line);
+    void addDeadline(String input, String[] splitInput){
+        try{
+            DukeException.validateInput(splitInput, "deadline");
+            String description = input.substring(9, input.indexOf("/by") - 1);
+            String by = input.substring(input.indexOf("/by") + 4);
+            Deadline newDeadline = new Deadline(description, by);
+            list.add(newDeadline);
+            System.out.println(Duke.line + "Got it. I've added this task:" );
+            System.out.println("  " + newDeadline.toString());
+            System.out.println(showCurrTasks());
+            System.out.println(Duke.line);
+        } catch(InvalidInputException m){
+            m.getErrorMsg();
+        }
+
     }
 
     void addEvent(String input) {
