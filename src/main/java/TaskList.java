@@ -43,12 +43,28 @@ public class TaskList{
     void listTask(){
         short i = 1;
         System.out.println(Duke.line + "Here are the tasks in your list:");
-        for(Task task : list){
-            System.out.print(i);
-            System.out.println(".[" + task.getStatusIcon() + "] " + task.description);
+        for(Task task : list) {
+            System.out.print(i + ".");
+            System.out.println(task.toString());
             i++;
         }
         System.out.println(Duke.line);
+    }
+
+    void addDeadline(String input){
+        int strLen = input.length();
+        String description = input.substring(9, input.indexOf("/by") - 1);
+        String by = input.substring(input.indexOf("/by") + 4, input.length());
+        Deadline newDeadline = new Deadline(description, by);
+        list.add(newDeadline);
+        System.out.println(Duke.line + "Got it. I've added this task:" );
+        System.out.println("  " + newDeadline.toString());
+        System.out.println(showCurrTasks());
+        System.out.println(Duke.line);
+    }
+
+    private String showCurrTasks(){
+        return "Now you have " + list.size() + " tasks in the list.";
     }
 
     // Function checks if the string is numeric which means user wants to tick their task as done.

@@ -28,9 +28,15 @@ public class Duke {
                 list.doneTask();
             }
             else{
+                String[] splitInput = input.split(" ");
+                String inputType = splitInput[0];
+                switch(inputType.toLowerCase()){
+                    case "deadline":
+                        list.addDeadline(input);
+                }/*
                 Task currTask = new Task(input);
                 list.addTask(currTask);
-                list.printAddedTask(input);
+                list.printAddedTask(input);*/
             }
         }
         System.out.println(line + "Bye. Hope to see you again soon!\n" + line);
