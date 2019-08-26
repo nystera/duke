@@ -18,10 +18,13 @@ public class DukeException extends Exception {
     }
 
     static void validateInput(String[] splitInput, String inputType) throws InvalidInputException {
-        if(splitInput.length == 1){
+        if(splitInput.length == 1 && !inputType.equalsIgnoreCase("bye")){
             throw new InvalidInputException("description", inputType, false, false);
         }
-        else{
+        else if(splitInput.length != 1 && inputType.equalsIgnoreCase("bye")){
+            throw new InvalidInputException("I'm sorry, were you trying to exit Duke? Please only input 'bye'");
+        }
+        else if (!inputType.equalsIgnoreCase("bye")){
             boolean flag = false;
             for(int i = 1; i < splitInput.length; ++i){
                 if((splitInput[i].equalsIgnoreCase("/by") && inputType.equalsIgnoreCase("deadline"))

@@ -85,7 +85,15 @@ public class TaskList{
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
+    }
 
+    void endDuke(String[] splitInput){
+        try{
+            DukeException.validateInput(splitInput, "bye");
+            System.out.println(Duke.line + "Bye. Hope to see you again soon!\n" + Duke.line);
+        } catch(InvalidInputException m){
+            m.getErrorMsg();
+        }
     }
 
     private String showCurrTasks(){

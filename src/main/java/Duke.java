@@ -18,7 +18,8 @@ public class Duke {
         System.out.println(line + "Hello I'm Duke\n" + "What can I do for you?\n" + line);
         Scanner userInputs = new Scanner(System.in);
         String input;
-        while (!(input = userInputs.nextLine()).equals("bye")) {
+        while (userInputs.hasNextLine()) {
+            input = userInputs.nextLine();
             String[] splitInput1 = input.split(" ");
             String inputType1 = splitInput1[0];
             try{
@@ -40,35 +41,16 @@ public class Duke {
                         list.completeTask(splitInput1, list.getSize());
                         break;
                     case "bye":
+                        list.endDuke(splitInput1);
+                        break;
                 }
-/*
-                // Changes it false if it does every other function
-                if (TaskList.isToList(input)) {
-                    list.listTask();
+                // Exit condition
+                if(splitInput1[0].equalsIgnoreCase("bye")){
+                    break;
                 }
-                else if(TaskList.isToCheckDone(input)){
-                    list.doneTask();
-                }
-                else{
-                    String[] splitInput = input.split(" ");
-                    String inputType = splitInput[0];
-                    switch(inputType.toLowerCase()){
-                        case "deadline":
-                            list.addDeadline(input);
-                            break;
-                        case "odo":
-                            list.addToDo(input);
-                            break;
-                        case "event":
-                            list.addEvent(input);
-                            break;
-                    }
-                }*/
             } catch(InvalidInputException m){
                 m.getErrorMsg();
             }
-
         }
-        System.out.println(line + "Bye. Hope to see you again soon!\n" + line);
     }
 }

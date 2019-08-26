@@ -23,15 +23,19 @@ public class InvalidInputException extends Exception{
         }
         else if(!hasDescription && !hasTimeSet){
             System.out.println(Duke.line + "OOPS!!! There is nothing to add in the " + inputType);
+            System.out.print(Duke.line);
         }
         else if(hasDescription && !hasTimeSet){
-            System.out.println(Duke.line + "OOPS!!! Please set a valid format of time of a " + inputType);
+            System.out.println(Duke.line + "OOPS!!! Please set a valid format of time of the " + inputType);
+            System.out.print(Duke.line);
         }
         else if(!hasDescription && hasTimeSet){
             System.out.println(Duke.line + "OOPS!!! Please insert the description of the " + inputType);
+            System.out.print(Duke.line);
         }
         else if(hasDescription && hasTimeSet){
-            System.out.println(Duke.line + "OOPS!!! Description of " + inputType + " is in the wrong format");
+            System.out.println(Duke.line + "OOPS!!! Description of the " + inputType + " is in the wrong format");
+            System.out.print(Duke.line);
         }
     }
 }
