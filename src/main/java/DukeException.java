@@ -10,6 +10,7 @@ public class DukeException extends Exception {
             case "todo":
             case "event":
             case "deadline":
+            case "done":
                 break;
             default:
                 throw new InvalidInputException("I'm sorry, but I don't know what that means :-(");
@@ -43,4 +44,21 @@ public class DukeException extends Exception {
         }
     }
 
+    static void ValidateMarkAsDone(String[] splitInput, int size) throws InvalidInputException{
+        if(splitInput.length < 2){
+            throw new InvalidInputException("Please input a number");
+        }
+        else if(splitInput.length > 2){
+            throw new InvalidInputException("Wrong formatting of done");
+        }
+        else{
+            if(!(TaskList.isNumeric(splitInput[1]))){
+                throw new InvalidInputException("Please enter a valid number");
+            }
+            else if(Integer.parseInt(splitInput[1]) > size
+                || (Integer.parseInt(splitInput[1]) <= 0)){
+                throw new InvalidInputException("Input range is out of bounds");
+            }
+        }
+    }
 }

@@ -33,8 +33,13 @@ public class Duke {
                     case "event":
                         list.addEvent(input, splitInput1);
                         break;
-                    case "bye":
+                    case "list":
+                        list.listTask();
+                        break;
                     case "done":
+                        list.completeTask(splitInput1, list.getSize());
+                        break;
+                    case "bye":
                 }
 /*
                 // Changes it false if it does every other function

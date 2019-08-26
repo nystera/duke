@@ -8,32 +8,24 @@ public class TaskList{
         list = new ArrayList<Task>();
     }
 
+    public int getSize(){
+        return list.size();
+    }
+
     // Function repeats the statement of the user.
     void printAddedTask(String input){
         System.out.println(Duke.line + "added: " + input + "\n" + Duke.line);
     }
 
-    static boolean isToList(String command){
-        return command.equals("list");
-    }
-
-    static boolean isToCheckDone(String command) {
-        if(command.contains("done ")){
-            // Checks if this input is to tick the Task in the list
-            String[] splitInput = command.split(" ");
-            //Checks if the second String is a number
-            if (isNumeric(splitInput[1])) {
-                curPtr = Integer.parseInt(splitInput[1]) - 1;
-                return true;
-            }
-        }
-        return false;
-    }
-
     // Function shows when you have completed a task.
-    void doneTask(){
-        list.get(curPtr).markAsDone();
-        System.out.println(Duke.line + "Nice! I've marked this task as done:\n" + "  [\u2713] " + list.get(curPtr).description + "\n" + Duke.line);
+    void completeTask(String[] splitInput, int size){
+        try{
+            DukeException.ValidateMarkAsDone(splitInput, size);
+            list.get(Integer.parseInt(splitInput[1]) - 1).markAsDone();
+            System.out.println(Duke.line + "Nice! I've marked this task as done:\n" + "  [\u2713] " + list.get(Integer.parseInt(splitInput[1]) - 1).description + "\n" + Duke.line);
+        } catch(InvalidInputException m){
+            m.getErrorMsg();
+        }
     }
 
     void listTask(){
@@ -101,7 +93,7 @@ public class TaskList{
     }
 
     // Function checks if the string is numeric which means user wants to tick their task as done.
-    private static boolean isNumeric(String strNum){
+    public static boolean isNumeric(String strNum){
         try {
             double d = Double.parseDouble(strNum);
         } catch (NumberFormatException | NullPointerException nfe){
