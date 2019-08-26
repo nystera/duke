@@ -25,10 +25,14 @@ public class Duke {
                 DukeException.validateCommand(inputType1);
                 switch(inputType1.toLowerCase()){
                     case "deadline":
-                        //System.out.println("adding Deadline");
                         list.addDeadline(input, splitInput1);
+                        break;
                     case "todo":
+                        list.addToDo(input, splitInput1);
+                        break;
                     case "event":
+                        list.addEvent(input, splitInput1);
+                        break;
                     case "bye":
                     case "done":
                 }
