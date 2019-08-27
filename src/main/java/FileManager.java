@@ -6,9 +6,9 @@ public class FileManager {
     private static Scanner x;
     private static Formatter y;
     private FileWriter z;
-
-    private static final String filePath = "C:\\Users\\Nathan\\Desktop\\Y2S1\\CS2113T\\duke\\data\\duke.txt";
-    private static final String FOLDER = "C:\\Users\\Nathan\\Desktop\\Y2S1\\CS2113T\\duke\\data";
+    private static final String ROOTDIR = System.getProperty("user.dir");
+    private static final String filePath = ROOTDIR + "\\data\\duke.txt";
+    private static final String FOLDER = ROOTDIR + "\\data";
 
 
     public void createFile(){
