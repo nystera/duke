@@ -6,7 +6,7 @@ public class Duke {
     public static final String line = "____________________________________________________________\n";
     public static TaskList list = new TaskList();
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -17,6 +17,13 @@ public class Duke {
         FileManager file = new FileManager();
         file.openFile();
         file.readData();
+
+        try{
+            DateTime example = new DateTime("25/05/1997 2.23pm");
+            System.out.println(example.getDateAndTime());
+        } catch(InvalidInputException e){
+            e.getErrorMsg();
+        }
 
         System.out.println(line + "Hello I'm Duke\n" + "What can I do for you?\n" + line);
         Scanner userInputs = new Scanner(System.in);

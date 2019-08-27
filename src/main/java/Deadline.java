@@ -1,6 +1,9 @@
+import java.util.Date;
+
 public class Deadline extends Task{
 
     protected String by;
+    protected Date DateAndTime;
 
     public Deadline(String description, String by){
         super(description);

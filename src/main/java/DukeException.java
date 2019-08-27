@@ -2,6 +2,10 @@ import javax.lang.model.type.NullType;
 
 public class DukeException extends Exception {
 
+    private static String wrongTimeFormatError = "Wrong formatting of date and time!\n" +
+            "Please use any of the following format instead:\n" +
+            "DD/MM/YYYY HHMM\n" +
+            "DD-MM-YYYY HH.MM.am/pm\n";
 
     static void validateCommand(String command) throws InvalidInputException {
         switch(command.toLowerCase()){
@@ -44,6 +48,17 @@ public class DukeException extends Exception {
             if(!flag && !(inputType.equalsIgnoreCase("todo"))) {
                 throw new InvalidInputException("time", inputType, true, false);
             }
+        }
+    }
+
+    static void ValidateDateAndTime(String userInput) throws InvalidInputException{
+        String[] splitInput = userInput.split(" ");
+        if(splitInput.length > 2){
+            throw new InvalidInputException(wrongTimeFormatError);
+        }
+        else {
+            String date = splitInput[0];
+            String time = splitInput[1];
         }
     }
 
