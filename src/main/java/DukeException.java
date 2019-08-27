@@ -28,7 +28,7 @@ public class DukeException extends Exception {
             boolean flag = false;
             for(int i = 1; i < splitInput.length; ++i){
                 if((splitInput[i].equalsIgnoreCase("/by") && inputType.equalsIgnoreCase("deadline"))
-                || (splitInput[i].equalsIgnoreCase("/at") && inputType.equalsIgnoreCase("event"))){
+                        || (splitInput[i].equalsIgnoreCase("/at") && inputType.equalsIgnoreCase("event"))){
                     flag = true;
                     if(i == 1){
                         throw new InvalidInputException("task", inputType, false, true);
@@ -59,7 +59,7 @@ public class DukeException extends Exception {
                 throw new InvalidInputException("Please enter a valid number");
             }
             else if(Integer.parseInt(splitInput[1]) > size
-                || (Integer.parseInt(splitInput[1]) <= 0)){
+                    || (Integer.parseInt(splitInput[1]) <= 0)){
                 throw new InvalidInputException("Input range is out of bounds");
             }
         }

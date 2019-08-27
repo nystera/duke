@@ -1,19 +1,22 @@
+import java.io.FileNotFoundException;
 import java.util.Scanner; // Imports the Scanner Class
-
 
 public class Duke {
     // This line is to help make the input look neater
     public static final String line = "____________________________________________________________\n";
+    public static TaskList list = new TaskList();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
                 + "| |_| | |_| |   <  __/\n"
                 + "|____/ \\__,_|_|\\_\\___|\n";
 
-        //This is to store the tasks given
-        TaskList list = new TaskList();
+        //Initializes the data in duke.txt
+        FileManager file = new FileManager();
+        file.openFile();
+        file.readData();
 
         System.out.println(line + "Hello I'm Duke\n" + "What can I do for you?\n" + line);
         Scanner userInputs = new Scanner(System.in);
@@ -52,5 +55,7 @@ public class Duke {
                 m.getErrorMsg();
             }
         }
+        file.updateFile();
+        file.closeFile();
     }
 }

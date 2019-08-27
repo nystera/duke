@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class TaskList{
-    private static ArrayList<Task> list;
+    public static ArrayList<Task> list;
     private static int curPtr;
 
     public TaskList(){
@@ -30,11 +30,17 @@ public class TaskList{
 
     void listTask(){
         short i = 1;
-        System.out.println(Duke.line + "Here are the tasks in your list:");
-        for(Task task : list) {
-            System.out.print(i + ".");
-            System.out.println(task.toString());
-            i++;
+        System.out.print(Duke.line);
+        if(list.size() != 0){
+            System.out.println("Here are the tasks in your list:");
+            for(Task task : list) {
+                System.out.print(i + ".");
+                System.out.println(task.toString());
+                i++;
+            }
+        }
+        else{
+            System.out.println("You have no current tasks! Good job!");
         }
         System.out.println(Duke.line);
     }
@@ -52,7 +58,11 @@ public class TaskList{
         } catch(InvalidInputException m) {
             m.getErrorMsg();
         }
+    }
 
+    void addToDo(String description, boolean isDone){
+        ToDo newToDo = new ToDo(description, isDone);
+        list.add(newToDo);
     }
 
     void addDeadline(String input, String[] splitInput){
@@ -71,6 +81,11 @@ public class TaskList{
         }
     }
 
+    void addDeadline(String description, String by, boolean isDone){
+        Deadline newDeadline = new Deadline(description, by, isDone);
+        list.add(newDeadline);
+    }
+
     void addEvent(String input, String[] splitInput) {
         try{
             DukeException.validateInput(splitInput, "event");
@@ -85,6 +100,11 @@ public class TaskList{
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
+    }
+
+    void addEvent(String description, String by, boolean isDone){
+        Event newEvent = new Event(description, by, isDone);
+        list.add(newEvent);
     }
 
     void endDuke(String[] splitInput){
