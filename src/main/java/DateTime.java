@@ -18,7 +18,7 @@ public class DateTime {
             "DD/MM/YYYY hhmm-hhmm\n" +
             "DD/MM/YYYY h.mma-h.mma";
 
-    private SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MMM/yyyy HHMM");
+    private SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MMM/yyyy HHmm");
     private SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MMM/yyyy h.mma");
     private SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd/MM/yyyy HHmm");
     private SimpleDateFormat dateFormat4 = new SimpleDateFormat("dd/MM/yyyy h.mma");
