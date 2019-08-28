@@ -1,20 +1,24 @@
 public class Event extends Task {
 
-    protected String at;
+    protected String duration;
+    protected DateTime date;
 
-    public Event(String description, String at){
+    public Event(String description, DateTime date, String duration){
         super(description);
-        this.at = at;
+        this.date = date;
+        this.duration = duration;
+
     }
 
-    public Event(String description, String at, boolean isDone){
+    public Event(String description, String date, String duration, boolean isDone) throws InvalidInputException {
         super(description);
         super.isDone = isDone;
-        this.at = at;
+        this.duration = duration;
+        this.date = new DateTime(date,0);
     }
 
     @Override
     public String toString(){
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return "[E]" + super.toString() + " (at: " + date.getDate() + " " + duration + ")";
     }
 }

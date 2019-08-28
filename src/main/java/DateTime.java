@@ -6,27 +6,26 @@ import java.util.Date;
 
 public class DateTime {
 
-    private static String wrongTimeFormatError = "Wrong formatting of date and time!\n" +
+    private Date DateAndTime;
+
+    public static String wrongTimeFormatError = "Wrong formatting of date and time!\n" +
             "Please use any of the following format instead:\n" +
             "DD/MM/YYYY HHMM\n" +
-            "DD-MM-YYYY hh.mm am/pm";
-    private SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-mm-yyyy HHMM");
-    private SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd.mm.yyyy HHMM");
-    private SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd/mm/yyyy HHMM");
-    private SimpleDateFormat dateFormat4 = new SimpleDateFormat("dd/mm/yyyy h.mma");
+            "DD/MM/YYYY hh.mma";
+
+    public static String wrongTimeFormatError2 = "Wrong formatting of date and time!\n" +
+            "Please use the following format instead:\n" +
+            "DD/MM/YYYY hhmm-hhmm\n" +
+            "DD/MM/YYYY h.mma-h.mma";
+
+    private SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MMM/yyyy HHMM");
+    private SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MMM/yyyy h.mma");
+    private SimpleDateFormat dateFormat3 = new SimpleDateFormat("dd/MM/yyyy HHmm");
+    private SimpleDateFormat dateFormat4 = new SimpleDateFormat("dd/MM/yyyy h.mma");
+    private SimpleDateFormat dateFormat5 = new SimpleDateFormat("dd/MM/yyyy");
 
     private SimpleDateFormat[] dateFormats = {dateFormat1, dateFormat2, dateFormat3, dateFormat4};
 
-    private String DateTimeStr;
-    private Date DateAndTime;
-
-    /*private String tryParse(String userInput){
-        for(SimpleDateFormat formats : dateFormats){
-            try{
-
-            }
-        }
-    }*/
 
     public DateTime(String userInput) throws InvalidInputException {
         for (SimpleDateFormat formats : dateFormats) {
@@ -40,8 +39,27 @@ public class DateTime {
         }
     }
 
+    public DateTime(String userInput, int other) throws InvalidInputException {
+            try {
+                DateAndTime = dateFormat5.parse(userInput);
+            } catch (ParseException e) {
+        }
+        if(DateAndTime == null){
+            throw new InvalidInputException(wrongTimeFormatError2);
+        }
+    }
+
+
     public String getDateAndTime(){
-        return DateAndTime.toString();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy h.mma");
+        String dateStr = dateFormat.format(DateAndTime);
+        return dateStr;
+    }
+
+    public String getDate(){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String dateStr = dateFormat.format(DateAndTime);
+        return dateStr;
     }
 
 }

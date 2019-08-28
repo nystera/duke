@@ -56,18 +56,22 @@ public class FileManager {
             //System.out.println(taskStr);
             taskType = task.toString().substring(1,2);
             //System.out.println(taskType);
-            status = task.getStatusIcon().equals("\u2713") ? "1" : "0";
+            status = task.isDone ? "1" : "0";
             //System.out.println(status);
             if(taskType.equals("T")){
                 description = task.toString().substring(7);
                 y.format("%s // %s // %s\n", taskType, status, description);
             }
             else if(taskType.equals("E")){
+                String date;
                 description = taskStr.substring(7, taskStr.indexOf(" (at:"));
                 time = taskStr.substring(taskStr.indexOf("(at:"));
                 time = time.replace("(at: ", "");
                 time = time.substring(0, time.length() - 1);
-                y.format("%s // %s // %s // %s\n", taskType, status, description, time);
+                String[] splitDateAndTime = time.split(" ");
+                date = splitDateAndTime[0];
+                time = splitDateAndTime[1];
+                y.format("%s // %s // %s // %s // %s\n", taskType, status, description, date, time);
             }
             else if(taskType.equals("D")){
                 description = taskStr.substring(7, taskStr.indexOf(" (by:"));
@@ -79,24 +83,26 @@ public class FileManager {
         }
     }
 
-    public void readData(){
+    public void readData() throws InvalidInputException {
         String taskType, description, time;
         boolean isDone;
         while(x.hasNextLine()){
             String[] splitLine = x.nextLine().split(" // ");
             taskType = splitLine[0];
-            isDone = splitLine[1].equals("\u2713");
+            isDone = splitLine[1].equals("1");
             description = splitLine[2];
             if(taskType.equals("T")){
                 Duke.list.addToDo(description, isDone);
             }
             else{
-                time = splitLine[3];
                 if(taskType.equals("D")){
+                    time = splitLine[3];
                     Duke.list.addDeadline(description, time, isDone);
                 }
                 else{
-                    Duke.list.addEvent(description, time, isDone);
+                    String date = splitLine[3];
+                    time = splitLine[4];
+                    Duke.list.addEvent(description, date, time, isDone);
                 }
             }
         }

@@ -2,22 +2,21 @@ import java.util.Date;
 
 public class Deadline extends Task{
 
-    protected String by;
-    protected Date DateAndTime;
+    protected DateTime DateAndTime;
 
-    public Deadline(String description, String by){
+    public Deadline(String description, DateTime by){
         super(description);
-        this.by = by;
+        this.DateAndTime = by;
     }
 
-    public Deadline(String description, String by, boolean isDone){
+    public Deadline(String description, String by, boolean isDone) throws InvalidInputException {
         super(description);
         super.isDone = isDone;
-        this.by = by;
+        this.DateAndTime = new DateTime(by);
     }
 
     @Override
     public String toString(){
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return "[D]" + super.toString() + " (by: " + DateAndTime.getDateAndTime()+ ")";
     }
 }

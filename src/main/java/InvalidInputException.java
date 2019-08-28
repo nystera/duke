@@ -26,7 +26,13 @@ public class InvalidInputException extends Exception{
             System.out.print(Duke.line);
         }
         else if(hasDescription && !hasTimeSet){
-            System.out.println(Duke.line + "OOPS!!! Please set a valid format of time of the " + inputType);
+            System.out.println(Duke.line + "OOPS!!! Please set a valid format of the " + inputType);
+            if(inputType.equals("deadline")){
+                System.out.println("Example: \"deadline description /by DD/MM/YYYY HHMM\"");
+            }
+            else {
+                System.out.println("Example: \"event description /at DD/MM/YYYY HHMM\"");
+            }
             System.out.print(Duke.line);
         }
         else if(!hasDescription && hasTimeSet){

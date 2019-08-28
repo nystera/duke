@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class TaskList{
+
     public static ArrayList<Task> list;
     private static int curPtr;
 
@@ -12,9 +13,14 @@ public class TaskList{
         return list.size();
     }
 
-    // Function repeats the statement of the user.
-    void printAddedTask(String input){
-        System.out.println(Duke.line + "added: " + input + "\n" + Duke.line);
+    public int getRemainingTasks(){
+        int uncompleted = 0;
+        for(Task task : list){
+            if(!task.isDone){
+                uncompleted++;
+            }
+        }
+        return uncompleted;
     }
 
     // Function shows when you have completed a task.
@@ -22,7 +28,9 @@ public class TaskList{
         try{
             DukeException.ValidateMarkAsDone(splitInput, size);
             list.get(Integer.parseInt(splitInput[1]) - 1).markAsDone();
-            System.out.println(Duke.line + "Nice! I've marked this task as done:\n" + "  [\u2713] " + list.get(Integer.parseInt(splitInput[1]) - 1).description + "\n" + Duke.line);
+            System.out.println(Duke.line + "Nice! I've marked this task as done:\n" +
+                    list.get(Integer.parseInt(splitInput[1]) - 1).toString().substring(3));
+            System.out.print("You now have " + getRemainingTasks() + " remaining tasks.\n" + Duke.line);
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
@@ -70,18 +78,27 @@ public class TaskList{
             DukeException.validateInput(splitInput, "deadline");
             String description = input.substring(9, input.indexOf("/by") - 1);
             String by = input.substring(input.indexOf("/by") + 4);
-            Deadline newDeadline = new Deadline(description, by);
-            list.add(newDeadline);
-            System.out.println(Duke.line + "Got it. I've added this task:" );
-            System.out.println("  " + newDeadline.toString());
-            System.out.println(showCurrTasks());
-            System.out.println(Duke.line);
+            try{
+                String[] splitDateTime = by.split(" ");
+                //Temporary solution to check if there exists a time
+                splitDateTime[1] = "0";
+                DateTime newTime = new DateTime(by);
+                Deadline newDeadline = new Deadline(description, newTime);
+                list.add(newDeadline);
+                System.out.println(Duke.line + "Got it. I've added this task:" );
+                System.out.println("  " + newDeadline.toString());
+                System.out.println(showCurrTasks());
+                System.out.println(Duke.line);
+            } catch(ArrayIndexOutOfBoundsException k){
+                InvalidInputException n = new InvalidInputException("Please input the time of the deadline!");
+                n.getErrorMsg();
+            }
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
     }
 
-    void addDeadline(String description, String by, boolean isDone){
+    void addDeadline(String description, String by, boolean isDone) throws InvalidInputException {
         Deadline newDeadline = new Deadline(description, by, isDone);
         list.add(newDeadline);
     }
@@ -91,19 +108,28 @@ public class TaskList{
             DukeException.validateInput(splitInput, "event");
             String description = input.substring(6, input.indexOf("/at") - 1);
             String at = input.substring(input.indexOf("/at") + 4);
-            Event newEvent = new Event(description, at);
-            list.add(newEvent);
-            System.out.println(Duke.line + "Got it. I've added this task:");
-            System.out.println("  " + newEvent.toString());
-            System.out.println(showCurrTasks());
-            System.out.println(Duke.line);
+            String[] splitDateTime = at.split(" ");
+            DateTime newDate = new DateTime(splitDateTime[0], 0);
+            try{
+                String duration = splitDateTime[1];
+                Event newEvent = new Event(description, newDate, duration);
+                list.add(newEvent);
+                System.out.println(Duke.line + "Got it. I've added this task:");
+                System.out.println("  " + newEvent.toString());
+                System.out.println(showCurrTasks());
+                System.out.println(Duke.line);
+            } catch(ArrayIndexOutOfBoundsException k){
+                InvalidInputException n = new InvalidInputException("Please input the time duration of the event!");
+                n.getErrorMsg();
+            }
+
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
     }
 
-    void addEvent(String description, String by, boolean isDone){
-        Event newEvent = new Event(description, by, isDone);
+    void addEvent(String description, String date, String duration, boolean isDone) throws InvalidInputException {
+        Event newEvent = new Event(description, date, duration, isDone);
         list.add(newEvent);
     }
 

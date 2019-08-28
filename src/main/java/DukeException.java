@@ -51,17 +51,6 @@ public class DukeException extends Exception {
         }
     }
 
-    static void ValidateDateAndTime(String userInput) throws InvalidInputException{
-        String[] splitInput = userInput.split(" ");
-        if(splitInput.length > 2){
-            throw new InvalidInputException(wrongTimeFormatError);
-        }
-        else {
-            String date = splitInput[0];
-            String time = splitInput[1];
-        }
-    }
-
     static void ValidateMarkAsDone(String[] splitInput, int size) throws InvalidInputException{
         if(splitInput.length < 2){
             throw new InvalidInputException("Please input a number");

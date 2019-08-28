@@ -18,13 +18,6 @@ public class Duke {
         file.openFile();
         file.readData();
 
-        try{
-            DateTime example = new DateTime("25/05/1997 2.23pm");
-            System.out.println(example.getDateAndTime());
-        } catch(InvalidInputException e){
-            e.getErrorMsg();
-        }
-
         System.out.println(line + "Hello I'm Duke\n" + "What can I do for you?\n" + line);
         Scanner userInputs = new Scanner(System.in);
         String input;
