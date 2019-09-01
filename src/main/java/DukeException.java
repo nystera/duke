@@ -51,7 +51,7 @@ public class DukeException extends Exception {
         }
     }
 
-    static void ValidateMarkAsDone(String[] splitInput, int size) throws InvalidInputException{
+        static void ValidateMarkAsDone(String[] splitInput, int size) throws InvalidInputException{
         if(splitInput.length < 2){
             throw new InvalidInputException("Please input a number");
         }

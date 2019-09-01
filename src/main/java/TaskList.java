@@ -2,8 +2,7 @@ import java.util.ArrayList;
 
 public class TaskList{
 
-    public static ArrayList<Task> list;
-    private static int curPtr;
+    public ArrayList<Task> list;
 
     public TaskList(){
         list = new ArrayList<Task>();
@@ -13,7 +12,7 @@ public class TaskList{
         return list.size();
     }
 
-    public int getRemainingTasks(){
+    public int getUncompletedTasks(){
         int uncompleted = 0;
         for(Task task : list){
             if(!task.isDone){
@@ -30,7 +29,7 @@ public class TaskList{
             list.get(Integer.parseInt(splitInput[1]) - 1).markAsDone();
             System.out.println(Duke.line + "Nice! I've marked this task as done:\n" +
                     list.get(Integer.parseInt(splitInput[1]) - 1).toString().substring(3));
-            System.out.print("You now have " + getRemainingTasks() + " remaining tasks.\n" + Duke.line);
+            System.out.print("You now have " + getUncompletedTasks() + " remaining tasks.\n" + Duke.line);
         } catch(InvalidInputException m){
             m.getErrorMsg();
         }
@@ -131,6 +130,29 @@ public class TaskList{
     void addEvent(String description, String date, String duration, boolean isDone) throws InvalidInputException {
         Event newEvent = new Event(description, date, duration, isDone);
         list.add(newEvent);
+    }
+
+    void deleteTask(String[] splitInput) throws ArrayIndexOutOfBoundsException{
+        try{
+            if(splitInput.length != 2){
+                throw new InvalidInputException("Please only type \"delete <numbering of task>\" !");
+            }
+            System.out.print(Duke.line);
+            int i = Integer.parseInt(splitInput[1]) - 1;
+            String oldTask = list.get(i).toString();
+            list.remove(i);
+            System.out.println("Noted. I've removed this task:");
+            System.out.println("  " + oldTask);
+            System.out.println("Now you have " + list.size() + " tasks in the list");
+        } catch(NumberFormatException e){
+            System.out.println("Please input a valid number! I cannot recognize it :(");
+        } catch(IndexOutOfBoundsException e){
+            System.out.println("Please input a number that's in range! Your tasks are only up to " + list.size());
+        } catch(InvalidInputException e){
+            e.getErrorMsg();
+        } finally{
+            System.out.print(Duke.line);
+        }
     }
 
     void endDuke(String[] splitInput){

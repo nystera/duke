@@ -26,7 +26,6 @@ public class Duke {
             String[] splitInput1 = input.split(" ");
             String inputType1 = splitInput1[0];
             try{
-                DukeException.validateCommand(inputType1);
                 switch(inputType1.toLowerCase()){
                     case "deadline":
                         list.addDeadline(input, splitInput1);
@@ -43,9 +42,14 @@ public class Duke {
                     case "done":
                         list.completeTask(splitInput1, list.getSize());
                         break;
+                    case "delete":
+                        list.deleteTask(splitInput1);
+                        break;
                     case "bye":
                         list.endDuke(splitInput1);
                         break;
+                    default:
+                        throw new InvalidInputException("I'm sorry, but I don't know what that means :-(");
                 }
                 // Exit condition
                 if(splitInput1[0].equalsIgnoreCase("bye")){
@@ -55,7 +59,7 @@ public class Duke {
                 m.getErrorMsg();
             }
         }
-        file.updateFile();
+        file.updateFile(list);
         file.closeFile();
     }
 }

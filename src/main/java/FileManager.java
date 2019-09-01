@@ -39,19 +39,19 @@ public class FileManager {
     }
 
     // As we are dealing with a smaller sample, we will just recreate a new file everytime it closes.
-    public void updateFile(){
+    public void updateFile(TaskList list){
         try{
             y = new Formatter(filePath);
-            addData();
+            addData(list);
         } catch (Exception e){
             System.out.println("Error");
         }
     }
 
-    public void addData(){
+    public void addData(TaskList list){
         String taskType, status, description, time;
         String taskStr;
-        for(Task task : TaskList.list){
+        for(Task task : list.list){
             taskStr = task.toString();
             //System.out.println(taskStr);
             taskType = task.toString().substring(1,2);
@@ -107,5 +107,4 @@ public class FileManager {
             }
         }
     }
-
 }
