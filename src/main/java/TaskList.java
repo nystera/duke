@@ -1,4 +1,7 @@
+import javax.sound.midi.SysexMessage;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TaskList{
 
@@ -155,6 +158,29 @@ public class TaskList{
         }
     }
 
+    void findTask(String[] splitInput){
+        try{
+            if(splitInput.length != 2){
+                throw new InvalidInputException("Please only type \"find <word>\"! I cannot find more than ONE keyword");
+            }
+            System.out.println(Duke.line + "Here are the matching tasks in your list:");
+            int counter = 1;
+            for(Task task : list){
+                if(isContain(task.toString(), splitInput[1])){
+                    System.out.println("  " + counter + "." + task.toString());
+                    counter++;
+                }
+            }
+            if(counter == 1){
+                System.out.println("  There are currently no tasks that contains " + "\"" + splitInput[1] + "\".");
+            }
+        } catch(InvalidInputException e){
+            e.getErrorMsg();
+        } finally{
+            System.out.println(Duke.line);
+        }
+    }
+
     void endDuke(String[] splitInput){
         try{
             DukeException.validateInput(splitInput, "bye");
@@ -176,6 +202,14 @@ public class TaskList{
             return false;
         }
         return true;
+    }
+
+    // Function checks if the tasks contains exactly the word
+    private static boolean isContain(String task, String keyword){
+        String pattern = "\\b" + keyword + "\\b";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(task);
+        return m.find();
     }
 
 }

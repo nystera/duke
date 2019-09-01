@@ -48,6 +48,9 @@ public class Duke {
                     case "bye":
                         list.endDuke(splitInput1);
                         break;
+                    case "find":
+                        list.findTask(splitInput1);
+                        break;
                     default:
                         throw new InvalidInputException("I'm sorry, but I don't know what that means :-(");
                 }
