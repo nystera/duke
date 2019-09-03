@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
-public class FileManager {
+public class Storage {
     private static Scanner x;
     private static Formatter y;
     private FileWriter z;

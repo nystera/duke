@@ -1,0 +1,4 @@
+cd ..
+cd build
+cd libs
+Duke-0.1.3.jar

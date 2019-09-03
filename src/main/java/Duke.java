@@ -1,28 +1,25 @@
-import java.io.FileNotFoundException;
 import java.util.Scanner; // Imports the Scanner Class
 
 public class Duke {
+    private Ui ui;
+
     // This line is to help make the input look neater
     public static final String line = "____________________________________________________________\n";
     public static TaskList list = new TaskList();
 
-    public static void main(String[] args) throws Exception {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
+    public Duke(){
+        ui = new Ui();
+    }
 
+    public void run() throws InvalidInputException {
+        ui.showWelcome();
         //Initializes the data in duke.txt
-        FileManager file = new FileManager();
+        Storage file = new Storage();
         file.openFile();
         file.readData();
-
-        System.out.println(line + "Hello I'm Duke\n" + "What can I do for you?\n" + line);
-        Scanner userInputs = new Scanner(System.in);
-        String input;
-        while (userInputs.hasNextLine()) {
-            input = userInputs.nextLine();
+        boolean isExit = false;
+        while(!isExit) {
+            String input = ui.readInput();
             String[] splitInput1 = input.split(" ");
             String inputType1 = splitInput1[0];
             try{
@@ -47,16 +44,13 @@ public class Duke {
                         break;
                     case "bye":
                         list.endDuke(splitInput1);
+                        isExit = true;
                         break;
                     case "find":
                         list.findTask(splitInput1);
                         break;
                     default:
                         throw new InvalidInputException("I'm sorry, but I don't know what that means :-(");
-                }
-                // Exit condition
-                if(splitInput1[0].equalsIgnoreCase("bye")){
-                    break;
                 }
             } catch(InvalidInputException m){
                 m.getErrorMsg();
@@ -65,4 +59,9 @@ public class Duke {
         file.updateFile(list);
         file.closeFile();
     }
+
+    public static void main(String[] args) throws Exception {
+        new Duke().run();
+    }
+
 }
