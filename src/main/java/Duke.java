@@ -17,17 +17,27 @@ public class Duke {
         file.readData();
         boolean isExit = false;
         while(!isExit) {
-            String input = ui.readInput();
-            Command c = Parser.parse(input);
-            c.execute();
-            isExit = c.isExit;
+            try {
+                String input = ui.readInput();
+                Command c = Parser.parse(input);
+                c.execute();
+                isExit = c.isExit;
+            } catch (DukeException e) {
+                e.getErrorMsg();
+            }
         }
         file.updateFile(list);
         file.closeFile();
     }
 
     public static void main(String[] args) throws Exception{
-        new Duke().run();
+        try {
+            new Duke().run();
+        } catch (DukeException e) {
+            e.getErrorMsg();
+        } catch (Exception e) {
+            System.out.println("something went wrong");
+        }
     }
 
 }

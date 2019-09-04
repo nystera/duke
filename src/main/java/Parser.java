@@ -6,41 +6,40 @@ public class Parser {
     public static Command parse(String command) throws DukeException {
         splitCommand = command.split(" ");
         String commandType = splitCommand[0].toLowerCase();
-
-        switch (commandType) {
-            case "deadline":
-                validateDeadline(command);
-                description = command.substring(9, command.indexOf("/by") - 1);
-                by = command.substring(command.indexOf("/by") + 4);
-                return new AddDeadLineCommand(description, by);
-            case "event":
-                validateEvent(command);
-                description = command.substring(6, command.indexOf("/at") - 1);
-                at = command.substring(command.indexOf("/at") + 4);
-                return new AddEventCommand(description, at);
-            case "todo":
-                validateToDo(command);
-                description = command.substring(5);
-                return new AddToDoCommand(description);
-            case "list":
-                validateOneWordCommand(command, commandType);
-                return new ListCommand(true);
-            case "bye":
-                validateOneWordCommand(command, commandType);
-                return new ExitCommand(true);
-            case "done":
-                validateTwoWordsCommand(command, commandType);
-                return new DoneCommand(Integer.parseInt(splitCommand[1]));
-            case "delete":
-                validateTwoWordsCommand(command, commandType);
-                return new DeleteCommand(Integer.parseInt(splitCommand[1]));
-            case "find":
-                validateTwoWordsCommand(command, commandType);
-                description = splitCommand[1];
-                return new FindCommand(description);
-            default:
-                throw new DukeException("I'm sorry, but I don't know what that means :-(");
-        }
+            switch (commandType) {
+                case "deadline":
+                    validateDeadline(command);
+                    description = command.substring(9, command.indexOf("/by") - 1);
+                    by = command.substring(command.indexOf("/by") + 4);
+                    return new AddDeadLineCommand(description, by);
+                case "event":
+                    validateEvent(command);
+                    description = command.substring(6, command.indexOf("/at") - 1);
+                    at = command.substring(command.indexOf("/at") + 4);
+                    return new AddEventCommand(description, at);
+                case "todo":
+                    validateToDo(command);
+                    description = command.substring(5);
+                    return new AddToDoCommand(description);
+                case "list":
+                    validateOneWordCommand(commandType);
+                    return new ListCommand(true);
+                case "bye":
+                    validateOneWordCommand(commandType);
+                    return new ExitCommand(true);
+                case "done":
+                    validateTwoWordsCommand(commandType);
+                    return new DoneCommand(Integer.parseInt(splitCommand[1]));
+                case "delete":
+                    validateTwoWordsCommand(commandType);
+                    return new DeleteCommand(Integer.parseInt(splitCommand[1]));
+                case "find":
+                    validateTwoWordsCommand(commandType);
+                    description = splitCommand[1];
+                    return new FindCommand(description);
+                default:
+                    throw new DukeException("I'm sorry, but I don't know what that means :-(");
+            }
 
     }
 
@@ -69,17 +68,17 @@ public class Parser {
             throw new DukeException("time", splitCommand[0], true, true);
         }
     }
-    private static void validateOneWordCommand(String command, String commandType) throws DukeException {
+    private static void validateOneWordCommand(String commandType) throws DukeException {
         String doWhat = commandType.equals("bye") ? "exit Duke?\n" : "list out your tasks?\n";
-        if (command.length() != 1) {
+        if (splitCommand.length != 1) {
             throw new DukeException("Sorry, were to trying to " + doWhat + "Please only type out \"" +
                     commandType + "\"");
         }
     }
-    private static void validateTwoWordsCommand(String command, String commandType) throws DukeException {
+    private static void validateTwoWordsCommand(String commandType) throws DukeException {
         String word = commandType.equals("find") ? "<keyword>" : "<number>";
-        if (command.length() != 2) {
-            throw new DukeException("Please only type out " + "\"" + commandType + " word\"");
+        if (splitCommand.length != 2) {
+            throw new DukeException("Please only type out " + "\"" + commandType + " " + word + "\"");
         } else {
             try {
                 if (commandType.equals("delete") || commandType.equals("done")) {
