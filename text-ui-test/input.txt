@@ -8,5 +8,8 @@ list
 find movie
 find movies
 delete 1
+delete 1
+deadline get things done /by 12/12/2012 1.22pm
+delete 1
 list
 bye
