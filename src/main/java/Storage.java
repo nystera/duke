@@ -83,7 +83,7 @@ public class Storage {
         }
     }
 
-    public void readData() throws InvalidInputException {
+    public void readData() throws DukeException {
         String taskType, description, time;
         boolean isDone;
         while(x.hasNextLine()){

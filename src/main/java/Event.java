@@ -10,7 +10,7 @@ public class Event extends Task {
 
     }
 
-    public Event(String description, String date, String duration, boolean isDone) throws InvalidInputException {
+    public Event(String description, String date, String duration, boolean isDone) throws DukeException {
         super(description);
         super.isDone = isDone;
         this.duration = duration;

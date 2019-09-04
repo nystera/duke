@@ -1,71 +1,47 @@
-import javax.lang.model.type.NullType;
+public class DukeException extends Exception{
+    private String errorMsg;
+    private String inputContent;
+    private String inputType;
+    private boolean hasDescription = false;
+    private boolean hasTimeSet = false;
 
-public class DukeException extends Exception {
-
-    private static String wrongTimeFormatError = "Wrong formatting of date and time!\n" +
-            "Please use any of the following format instead:\n" +
-            "DD/MM/YYYY HHMM\n" +
-            "DD-MM-YYYY HH.MM.am/pm\n";
-
-    static void validateCommand(String command) throws InvalidInputException {
-        switch(command.toLowerCase()){
-            case "bye":
-            case "list":
-            case "todo":
-            case "event":
-            case "deadline":
-            case "done":
-                break;
-            default:
-                throw new InvalidInputException("I'm sorry, but I don't know what that means :-(");
-        }
+    public DukeException(String s){
+        this.errorMsg = s;
     }
 
-    static void validateInput(String[] splitInput, String inputType) throws InvalidInputException {
-        if(splitInput.length == 1 && !inputType.equalsIgnoreCase("bye")){
-            throw new InvalidInputException("description", inputType, false, false);
-        }
-        else if(splitInput.length != 1 && inputType.equalsIgnoreCase("bye")){
-            throw new InvalidInputException("I'm sorry, were you trying to exit Duke? Please only input 'bye'");
-        }
-        else if (!inputType.equalsIgnoreCase("bye")){
-            boolean flag = false;
-            for(int i = 1; i < splitInput.length; ++i){
-                if((splitInput[i].equalsIgnoreCase("/by") && inputType.equalsIgnoreCase("deadline"))
-                        || (splitInput[i].equalsIgnoreCase("/at") && inputType.equalsIgnoreCase("event"))){
-                    flag = true;
-                    if(i == 1){
-                        throw new InvalidInputException("task", inputType, false, true);
-                    }
-                    else if(i == splitInput.length - 1){
-                        throw new InvalidInputException("time", inputType, true, false);
-                    }
-                }
-                else if(splitInput[i].contains("/") && inputType.equalsIgnoreCase("todo")){
-                    throw new InvalidInputException("description", inputType, true, true);
-                }
-            }
-            if(!flag && !(inputType.equalsIgnoreCase("todo"))) {
-                throw new InvalidInputException("time", inputType, true, false);
-            }
-        }
+    public DukeException(String s, String commandType, boolean hasDescription, boolean hasTimeSet){
+        this.inputContent = s;
+        this.inputType = commandType;
+        this.hasDescription = hasDescription;
+        this.hasTimeSet = hasTimeSet;
     }
 
-        static void ValidateMarkAsDone(String[] splitInput, int size) throws InvalidInputException{
-        if(splitInput.length < 2){
-            throw new InvalidInputException("Please input a number");
+    public void getErrorMsg(){
+        if(inputType == null){ // Garbage inputs
+            System.out.println(Duke.line + errorMsg);
+            System.out.print(Duke.line);
         }
-        else if(splitInput.length > 2){
-            throw new InvalidInputException("Wrong formatting of done");
+        else if(!hasDescription && !hasTimeSet){
+            System.out.println(Duke.line + "OOPS!!! There is nothing to add in the " + inputType);
+            System.out.print(Duke.line);
         }
-        else{
-            if(!(TaskList.isNumeric(splitInput[1]))){
-                throw new InvalidInputException("Please enter a valid number");
+        else if(hasDescription && !hasTimeSet){
+            System.out.println(Duke.line + "OOPS!!! Please set a valid format of the " + inputType);
+            if(inputType.equals("deadline")){
+                System.out.println("Example: \"deadline description /by DD/MM/YYYY HHMM\"");
             }
-            else if(Integer.parseInt(splitInput[1]) > size
-                    || (Integer.parseInt(splitInput[1]) <= 0)){
-                throw new InvalidInputException("Input range is out of bounds");
+            else {
+                System.out.println("Example: \"event description /at DD/MM/YYYY HHMM\"");
             }
+            System.out.print(Duke.line);
+        }
+        else if(!hasDescription && hasTimeSet){
+            System.out.println(Duke.line + "OOPS!!! Please insert the description of the " + inputType);
+            System.out.print(Duke.line);
+        }
+        else if(hasDescription && hasTimeSet){
+            System.out.println(Duke.line + "OOPS!!! Description of the " + inputType + " is in the wrong format");
+            System.out.print(Duke.line);
         }
     }
 }

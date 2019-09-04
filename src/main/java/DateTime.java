@@ -1,4 +1,3 @@
-import javax.lang.model.type.NullType;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +26,7 @@ public class DateTime {
     private SimpleDateFormat[] dateFormats = {dateFormat1, dateFormat2, dateFormat3, dateFormat4};
 
 
-    public DateTime(String userInput) throws InvalidInputException {
+    public DateTime(String userInput) throws DukeException {
         for (SimpleDateFormat formats : dateFormats) {
             try {
                 DateAndTime = formats.parse(userInput);
@@ -35,17 +34,17 @@ public class DateTime {
             }
         }
         if(DateAndTime == null){
-            throw new InvalidInputException(wrongTimeFormatError);
+            throw new DukeException(wrongTimeFormatError);
         }
     }
 
-    public DateTime(String userInput, int other) throws InvalidInputException {
+    public DateTime(String userInput, int other) throws DukeException {
             try {
                 DateAndTime = dateFormat5.parse(userInput);
             } catch (ParseException e) {
         }
         if(DateAndTime == null){
-            throw new InvalidInputException(wrongTimeFormatError2);
+            throw new DukeException(wrongTimeFormatError2);
         }
     }
 
