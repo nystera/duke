@@ -2,6 +2,8 @@ import java.util.Scanner; // Imports the Scanner Class
 
 public class Ui {
 
+    private Scanner userInput = new Scanner(System.in);
+
     private final String logo = " ____        _        \n"
             + "|  _ \\ _   _| | _____ \n"
             + "| | | | | | | |/ / _ \\\n"
@@ -22,7 +24,6 @@ public class Ui {
     }
 
     public String readInput(){
-        Scanner userInput = new Scanner(System.in);
         return userInput.nextLine();
     }
 }

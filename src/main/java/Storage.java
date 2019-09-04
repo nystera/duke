@@ -5,7 +5,6 @@ import java.lang.*;
 public class Storage {
     private static Scanner x;
     private static Formatter y;
-    private FileWriter z;
     private static final String ROOTDIR = System.getProperty("user.dir");
     private static final String filePath = ROOTDIR + "\\data\\duke.txt";
     private static final String FOLDER = ROOTDIR + "\\data";
@@ -38,7 +37,7 @@ public class Storage {
         x.close();
     }
 
-    // As we are dealing with a smaller sample, we will just recreate a new file everytime it closes.
+    // As we are dealing with a smaller sample, we will just recreate a new file every time it closes.
     public void updateFile(TaskList list){
         try{
             y = new Formatter(filePath);

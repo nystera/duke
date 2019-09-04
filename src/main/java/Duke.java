@@ -17,8 +17,8 @@ public class Duke {
         file.readData();
         boolean isExit = false;
         while(!isExit) {
+            String input = ui.readInput();
             try {
-                String input = ui.readInput();
                 Command c = Parser.parse(input);
                 c.execute();
                 isExit = c.isExit;
@@ -35,8 +35,6 @@ public class Duke {
             new Duke().run();
         } catch (DukeException e) {
             e.getErrorMsg();
-        } catch (Exception e) {
-            System.out.println("something went wrong");
         }
     }
 
