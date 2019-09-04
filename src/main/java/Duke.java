@@ -20,6 +20,7 @@ public class Duke {
         boolean isExit = false;
         while(!isExit) {
             String input = ui.readInput();
+
             String[] splitInput1 = input.split(" ");
             String inputType1 = splitInput1[0];
             try{
