@@ -1,10 +1,31 @@
+/**
+ * This class is to properly parse the user inputs and returns the Command for the input
+ * <p>
+ *     It breaks down the input such that Duke will recognize the type of Command given
+ * </p>
+ * @author Nathan Yeo
+ * @version 1.0
+ * @since v1.0
+ */
 public class Parser {
-
+    /**
+     * This variable is to split the String with the spacing to properly check the Command.
+     */
     private static String[] splitCommand;
+    /**
+     * These string variables are used mainly for "Add___Command" class for Duke to properly
+     * store them in the TaskList.
+     */
     private static String description, by, at;
 
+    /**
+     *
+     * @param command String that the User has inputted.
+     * @return Command type that is determined to it's specific subclass of Command.
+     * @throws DukeException when User inputs the wrong format of Command.
+     */
     public static Command parse(String command) throws DukeException {
-        splitCommand = command.split(" ");
+        splitCommand = command.split(" ",2);
         String commandType = splitCommand[0].toLowerCase();
             switch (commandType) {
                 case "deadline":
@@ -43,6 +64,12 @@ public class Parser {
 
     }
 
+    /**
+     * This function is to validate the deadline format by checking if the User has inputted the proper
+     * way that Duke wants them to.
+     * @param command is the String that the User has inputted.
+     * @throws DukeException when User does not properly follow the format of Deadline
+     */
     private static void validateDeadline(String command) throws DukeException {
         if (splitCommand.length == 1) {
             throw new DukeException("description", splitCommand[0], false, false);
@@ -52,6 +79,12 @@ public class Parser {
             throw new DukeException("task", splitCommand[0], false, true);
         }
     }
+    /**
+     * This function is to validate the Event format by checking if the User has inputted the proper
+     * way that Duke wants them to.
+     * @param command is the String that the User has inputted.
+     * @throws DukeException when User does not properly follow the format of Event
+     */
     private static void validateEvent(String command) throws DukeException {
         if (splitCommand.length == 1) {
             throw new DukeException("description", splitCommand[0], false, false);
@@ -61,6 +94,12 @@ public class Parser {
             throw new DukeException("task", splitCommand[0], false, true);
         }
     }
+    /**
+     * This function is to validate the ToDo format by checking if the User has inputted the proper
+     * way that Duke wants them to.
+     * @param command is the String that the User has inputted.
+     * @throws DukeException when User does not properly follow the format of ToDo
+     */
     private static void validateToDo(String command) throws DukeException {
         if (splitCommand.length == 1) {
             throw new DukeException("description", splitCommand[0], false, false);
@@ -68,6 +107,12 @@ public class Parser {
             throw new DukeException("time", splitCommand[0], true, true);
         }
     }
+    /**
+     * This function is to validate all one word commands by checking if the User has inputted the proper
+     * way that Duke wants them to.
+     * @param commandType is the String that the User has inputted.
+     * @throws DukeException when User does not properly follow the format.
+     */
     private static void validateOneWordCommand(String commandType) throws DukeException {
         String doWhat = commandType.equals("bye") ? "exit Duke?\n" : "list out your tasks?\n";
         if (splitCommand.length != 1) {
@@ -75,6 +120,13 @@ public class Parser {
                     commandType + "\"");
         }
     }
+    /**
+     * This function is to validate all two words commands by checking if the User has inputted the proper
+     * way that Duke wants them to.
+     * @param commandType is the String that the User has inputted.
+     * @throws DukeException when User does not properly follow the format or if number is greater than
+     * the number of elements in their TaskList.
+     */
     private static void validateTwoWordsCommand(String commandType) throws DukeException {
         String word = commandType.equals("find") ? "<keyword>" : "<number>";
         if (splitCommand.length != 2) {
